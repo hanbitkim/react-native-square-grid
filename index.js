@@ -57,13 +57,9 @@ export default class SquareGrid extends Component {
 
 		var isScrolling = !rows;
 
-		if(isScrolling) {
-			size = Math.floor(width / columns);
-		} else {
-		  width = this.props.marginHorizontal ? width - (this.props.marginHorizontal) * (columns - 1) : width
-			size = width / columns;
-			size = Math.floor(size);
-		}
+    width = this.props.marginHorizontal ? width - (this.props.marginHorizontal) * (columns - 1) : width
+    size = width / columns;
+    size = Math.floor(size);
 
 		var itemStyle = {
 			width: size,
