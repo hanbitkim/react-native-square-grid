@@ -34,8 +34,8 @@ export default class SquareGrid extends Component {
 		var props = this.props;
 		var state = this.state;
 
-		var width = state.width - 2;
-		var height = state.height - 2;
+		var width = state.width;
+		var height = state.height;
 
 		var items = props.items;
 		var renderItem = props.renderItem;
@@ -51,8 +51,8 @@ export default class SquareGrid extends Component {
 			return (<View />);
 		}
 
-		var marginHorizontal = 0;
-		var marginVertical = 0;
+		var marginHorizontal = this.props.marginHorizontal || 0;
+		var marginVertical = this.props.marginVertical || 0;
 		var size;
 
 		var isScrolling = !rows;
@@ -60,18 +60,14 @@ export default class SquareGrid extends Component {
 		if(isScrolling) {
 			size = Math.floor(width / columns);
 		} else {
-			size = Math.min(width / columns, height / rows);
-
-			marginHorizontal = Math.floor((width - (size * columns)) / (2 * columns));
-			marginVertical = Math.floor((height - (size * rows)) / (2 * rows));
-
+		  width = this.props.marginHorizontal ? width - (this.props.marginHorizontal) * (columns - 1) : width
+			size = width / columns;
 			size = Math.floor(size);
 		}
 
 		var itemStyle = {
 			width: size,
 			height: size,
-			marginHorizontal: marginHorizontal,
 			marginVertical: marginVertical
 		};
 
@@ -81,7 +77,7 @@ export default class SquareGrid extends Component {
 
 		var renderedItems = toRender.map(function(item, index){
 			return (
-				<View key={index} style={itemStyle}>
+				<View key={index} style={[itemStyle, {marginLeft: index % columns === 0 ? 0: marginHorizontal}]}>
 					{renderItem(item, index)}
 				</View>
 			);
